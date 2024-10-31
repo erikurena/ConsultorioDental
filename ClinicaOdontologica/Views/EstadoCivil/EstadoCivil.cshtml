@@ -1,0 +1,20 @@
+﻿@model EstadoCivilModel
+
+@{
+    ViewData["Title"] = "EstadoCivil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Informacion Personal
+    </div>
+    <div class="card-body">
+        <form asp-action="GradoInstruccion" asp-controller="Instruccion" method="post">
+            <div class="mb-3">
+                <label for="IdEstadoCivil">Estado Civil:</label>
+                @Html.DropDownListFor(model => model.IdEstadoCivil, (IEnumerable<SelectListItem>)ViewBag.EstadoCivil, "Seleccione un Estado Civil", new { @class = "form-control" })
+            </div>
+        </form>
+    </div>
+</div>

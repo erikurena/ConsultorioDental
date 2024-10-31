@@ -1,0 +1,438 @@
+﻿@model PacienteViewModel
+@{
+    ViewData["Title"] = "GuardarPaciente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .card {
+            border: 1px;
+            box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.25);
+            -webkit-box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.25);
+            -moz-box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.25);
+        }
+
+        .card-header {
+           font-size: 20px;
+            font-weight: bold;
+        background-color: white;
+        }
+        </style>
+</head>
+
+
+<div class="container-fluid"> 
+    <div class="d-flex justify-content-center">
+        <h1 class="text-center">HISTORIA CLINICA ODONTOLOGICA</h1>
+    </div>
+
+    <br />
+    <form asp-action="GuardarPaciente" asp-controller="Paciente" method="post" class="d-flex flex-column">
+        <div class="card">
+            <div class="card-header">
+                Informacion Personal
+            </div>
+            <div class="card-body  ">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Nombres:</label>
+                            <input asp-for="InfoPersonalPacienteModel.Nombre" type="text" class="form-control" maxlength="11">
+                            <span asp-validation-for="InfoPersonalPacienteModel.Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Apellido Paterno:</label>
+                            <input asp-for="InfoPersonalPacienteModel.ApellidoPaterno" type="text" class="form-control">
+                            <span asp-validation-for="InfoPersonalPacienteModel.ApellidoPaterno" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Apellido Materno:</label>
+                            <input asp-for="InfoPersonalPacienteModel.ApellidoMaterno" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Ocupacion:</label>
+                            <input asp-for="InfoPersonalPacienteModel.Ocupacion" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                        <div class="mb-3">
+                            <label class="form-label">Direccion:</label>
+                            <input asp-for="InfoPersonalPacienteModel.Direccion" type="text" class="form-control">
+                            <span asp-validation-for="InfoPersonalPacienteModel.Direccion" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Telefono:</label>
+                            <input asp-for="InfoPersonalPacienteModel.Telefono" type="text" class="form-control">
+                            <span asp-validation-for="InfoPersonalPacienteModel.Telefono" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-2 col-md-4 col-lg-2 mb-2">
+                        <label class="form-label">Edad:</label>
+                        <input asp-for="InfoPersonalPacienteModel.Edad" type="text" class="form-control">
+                        <span asp-validation-for="InfoPersonalPacienteModel.Edad" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-3">
+                        <label class="form-label">Fecha de Nacimiento:</label>
+                        <div class="input-group date mb-3">
+                            <input asp-for="InfoPersonalPacienteModel.FechaNacimiento" id="dates" type="text"  class="form-control" placeholder="yyyy-mm-dd">
+                            <span class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 ">
+                        <div class="mb-3">
+                            <label for="IdLugarNacimiento" class="form-label ">Lugar de Nacimiento:</label>
+                            @Html.DropDownListFor(model => model.InfoPersonalPacienteModel.IdLugarNacimiento, (IEnumerable<SelectListItem>)ViewBag.MostrarLugarNacimiento, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+
+                    <div class="dropdown col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="mb-3">
+                            <label for="IdGradoInstruccion" class="form-label">Grado de Instrucción:</label>
+                            @Html.DropDownListFor(model => model.InfoPersonalPacienteModel.IdGradoInstruccion, (IEnumerable<SelectListItem>)ViewBag.Instruccion, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="mb-3">
+                            <label for="IdEstadoCivil" class="form-label">Estado Civil:</label>
+                            @Html.DropDownListFor(model => model.InfoPersonalPacienteModel.IdEstadoCivil, (IEnumerable<SelectListItem>)ViewBag.EstadoCivil, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                        <div class="mb-3">
+                            <label for="IdSexo" class="form-label">Sexo:</label>
+                            @Html.DropDownListFor(model => model.InfoPersonalPacienteModel.IdSexo, (IEnumerable<SelectListItem>)ViewBag.MostrarSexo, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="card ">
+            <div class="card-header">
+                Antecedentes Patologicos
+            </div>
+            <div class="card-body  ">
+                <div class="row">
+
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group ">
+                            <label class="control-label"> Antecedentes Familiares:</label>
+                            <input asp-for="AntecedentePatologicoModel.AntecedenteFamiliar" class="form-control" />
+                        </div>
+                        <br />
+                    </div>
+
+                    <div class="  card-header">
+                        Antecedentes Patológicos Personales
+                    </div>
+                    <div class="form-check form-check-inline ">
+                        @foreach (var item in Model.Enfermedades)
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="EnfermedadesSeleccionadas" value="@item.IdEnfermedad" id="item_@item.IdEnfermedad">
+                                <label class="form-check-label" for="item_@item.IdEnfermedad">@item.Enfermedad</label>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Otros:</label>
+                            <input asp-for="AntecedentePatologicoModel.Otro" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                        <div class="mb-3">
+                            <label for="IdAlergia" class="form-label">Alergia:</label>
+                            @Html.DropDownListFor(model => model.AntecedentePatologicoModel.IdAlergia, (IEnumerable<SelectListItem>)ViewBag.MostrarAlergia,
+                                     new { @class = "form-control form-select ", @id = "IdAlergia" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                        <div class="form-group">
+                            <label class="form-label">Tipo de Alergia:</label>
+                            <input asp-for="AntecedentePatologicoModel.TipoAlergia"  class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                        <div class="mb-3">
+                            <label for="IdEmbarazo" class="form-label">Embarazo:</label>
+                            @Html.DropDownListFor(model => model.AntecedentePatologicoModel.IdEmbarazo, (IEnumerable<SelectListItem>)ViewBag.MostrarEmbarazo, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                        <div class="form-group">
+                            <label class="form-label">Semanas Emb.</label>
+                            <input asp-for="AntecedentePatologicoModel.SemanaEmbarazo" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="card ">
+            <div class="card-header">
+                Tratamiento medico
+            </div>
+            <div class="card-body  ">
+                <div class="row">
+
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label">¿Esta en Tratamiento Medico?</label>
+                            <input asp-for="TratamientoMedico.Tratamiento" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label">¿Actualmente recibe algún medicamento?</label>
+                            <input asp-for="TratamientoMedico.Medicamento" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                            <div class="mb-3">
+                                <label for="IdEmbarazo" class="form-label">Tuvo Hemorragia despues de una extraccion dental:</label>
+                                @Html.DropDownListFor(model => model.TratamientoMedico.IdHemorragiaDental, (IEnumerable<SelectListItem>)ViewBag.MostrarHemorragia, new { @class = "form-control form-select" })
+                            </div>
+                        </div>
+                        <div class="col-2 col-md-2">
+                            <div class="form-check form-check-inline">
+                                <br />
+                                <input class="form-check-input" type="checkbox" name="TratamientoMedico.HemorragiaInmediata" value="1" >
+                                <label class="form-check-label" asp-for="TratamientoMedico.HemorragiaInmediata">Inmediato</label>
+                                <input type="hidden" name="TratamientoMedico.HemorragiaInmediata" value="0" />
+                            </div>
+                        </div>
+                        <div class="col-2 col-md-2">
+                            <div class="form-check form-check-inline">
+                                <br />
+                                <input class="form-check-input" type="checkbox" name="TratamientoMedico.HemorragiaMediata" value="1" />
+                                <label class="form-check-label" asp-for="TratamientoMedico.HemorragiaMediata">Mediato</label>
+                                <input type="hidden" name="TratamientoMedico.HemorragiaMediata" value="0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="card ">
+            <div class="card-header">
+                Examen Oral
+            </div>
+            <div class="card-body  ">
+                <div class="row">
+
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">ATM:</label>
+                            <input asp-for="ExamenOralModel.Atm" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Ganglios Linfaticos:</label>
+                            <input asp-for="ExamenOralModel.GanglioLinfatico" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label for="IdRespiradorOral" class="form-label">Respirador:</label>
+                            @Html.DropDownListFor(model => model.ExamenOralModel.IdRespiradorOral, (IEnumerable<SelectListItem>)ViewBag.MostrarRespiradorOral, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Otro:</label>
+                            <input asp-for="ExamenOralModel.Otro" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="card ">
+            <div class="card-header">
+                Examen Intra Oral
+            </div>
+            <div class="card-body  ">
+                <div class="row">
+
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Labios:</label>
+                            <input asp-for="ExamenOralModel.Labio" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Lengua:</label>
+                            <input asp-for="ExamenOralModel.Lengua" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Paladar:</label>
+                            <input asp-for="ExamenOralModel.Paladar" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Piso de la Boca:</label>
+                            <input asp-for="ExamenOralModel.PisoBoca" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Mucosa Yugal:</label>
+                            <input asp-for="ExamenOralModel.MucosaYugal" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Encias:</label>
+                            <input asp-for="ExamenOralModel.Encia" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label for="IdProtesisDental" class="form-label">Protesis Dental:</label>
+                            @Html.DropDownListFor(model => model.ExamenOralModel.IdProtesisDental, (IEnumerable<SelectListItem>)ViewBag.MostrarProtesisDental, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="card  ">
+            <div class="card-header">
+                Antecedentes BucoDentales
+            </div>
+            <div class="card-body  ">
+                <div class="row">
+
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Ultima visita al Odontologo:</label>
+                            <input asp-for="AntecedenteBucoDentalModel.UltimaVisitaOdontologo" type="date" class="form-control" />
+                        </div>
+                    </div>                   
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label for="IbBebe" class="form-label">Bebe:</label>
+                            @Html.DropDownListFor(model => model.AntecedenteBucoDentalModel.IdBebe, (IEnumerable<SelectListItem>)ViewBag.MostrarBebe, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label for="IdFuma" class="form-label">Fuma:</label>
+                            @Html.DropDownListFor(model => model.AntecedenteBucoDentalModel.IdFuma, (IEnumerable<SelectListItem>)ViewBag.MostrarFuma, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <div class="mb-3">
+                            <label class="form-label">Otro:</label>
+                            <input asp-for="AntecedenteBucoDentalModel.Otro" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="card  ">
+            <div class="card-header">
+                Antecedentes de Higiene Oral
+            </div>
+            <div class="card-body  ">
+                <div class="row">
+
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-3">
+                            <label for="IdCepilloDental" class="form-label">Usa Cepillo Dental:</label>
+                            @Html.DropDownListFor(model => model.AntecedenteHigieneOralModel.IdCepilloDental, (IEnumerable<SelectListItem>)ViewBag.MostrarCepilloDental, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-3">
+                            <label for="IdHiloDental" class="form-label">Usa Hilo Dental:</label>
+                            @Html.DropDownListFor(model => model.AntecedenteHigieneOralModel.IdHiloDental, (IEnumerable<SelectListItem>)ViewBag.MostrarHiloDental, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                        <div class="mb-3">
+                            <label for="IdEnjuageBucal" class="form-label">Usa Enjuague Bucal:</label>
+                            @Html.DropDownListFor(model => model.AntecedenteHigieneOralModel.IdEnjuageBucal, (IEnumerable<SelectListItem>)ViewBag.MostrarEnjuagueBucal, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label">Frecuencia Cepillado Dental:</label>
+                            <input asp-for="AntecedenteHigieneOralModel.FrecuenciaCepilladoDental" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label for="IdSangradoEncia" class="form-label">Tiene sangrado dental:</label>
+                            @Html.DropDownListFor(model => model.AntecedenteHigieneOralModel.IdSangradoEncia, (IEnumerable<SelectListItem>)ViewBag.MostrarangradoEncia, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                        <div class="mb-3">
+                            <label for="IdHigieneBucal" class="form-label">Higiene Bucal:</label>
+                            @Html.DropDownListFor(model => model.AntecedenteHigieneOralModel.IdHigieneBucal, (IEnumerable<SelectListItem>)ViewBag.MostrarHigieneBucal, new { @class = "form-control form-select" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-12 col-sm-6 ">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a asp-action="Pacientes" asp-controller="Paciente" class="btn btn-warning">Volver a la lista</a>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#dates').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            });
+
+            // Mostrar datepicker al hacer clic en el icono
+            $('.input-group-text').click(function () {
+                $(this).siblings('input').focus();
+            });
+        });
+    </script>
+}

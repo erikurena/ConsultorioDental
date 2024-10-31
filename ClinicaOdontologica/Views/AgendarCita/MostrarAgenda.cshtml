@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "MostrarAgenda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var events = ViewBag.Events;
+}
+
+<h1 class="d-flex justify-content-center"> Agenda de Pacientes</h1>
+
+<div id='calendario'></div>
+
+<div class="modal fade" id="eventoModal" tabindex="-1" aria-labelledby="eventoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventoModalLabel">Cita Odontologica</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre del Paciente:</strong> <span id="modalNombrePaciente"></span></p>
+                <p><strong>Tipo de Consulta:</strong> <span id="modalTipoConsulta"></span></p>
+                <p><strong>Horario:</strong> <span id="modalHorario"></span></p>
+                <p><strong>Fecha:</strong> <span id="modalFecha"></span></p>               
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendario');
+        var events = @Html.Raw(events);
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            headerToolbar: {
+                left: 'prev',
+                center: 'title',
+                right: 'next'
+            },
+            locale: 'es',
+            slotMinTime: '07:00:00',
+            slotMaxTime: '23:00:00',
+            selectable: true,
+            allDaySlot: false,
+            events: events,
+            eventClick: function (info) {
+                // Abre el modal y muestra los detalles del evento
+                document.getElementById('modalNombrePaciente').innerText = info.event.extendedProps.nombrePaciente;
+                document.getElementById('modalTipoConsulta').innerText = info.event.extendedProps.tipoConsulta;
+                document.getElementById('modalHorario').innerText = info.event.extendedProps.horario;
+                document.getElementById('modalFecha').innerText = info.event.extendedProps.fecha;                
+
+                var eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
+                eventoModal.show();
+            }
+        });
+        calendar.render();
+    });
+</script>

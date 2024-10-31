@@ -1,0 +1,47 @@
+﻿@model InfoPersonalPacienteModel
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Editar Informacion Personal
+    </div>
+    <div class="card-body">
+        <form asp-action="Editar" asp-controller="InformacionPersonal" method="post">
+            <input asp-for="IdInformacionPersonal" type="hidden" class="form-control">
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input asp-for="Nombre" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Apellido Paterno</label>
+                <input asp-for="ApellidoPaterno" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Apellido Materno</label>
+                <input asp-for="ApellidoMaterno" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ocupacion</label>
+                <input asp-for="Ocupacion" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Direccion</label>
+                <input asp-for="Direccion" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Telefono</label>
+                <input asp-for="Telefono" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Edad</label>
+                <input asp-for="Edad" type="number" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a asp-action="ListaInformacion" asp-controller="InformacionPersonal" class="btn btn-warning">Volver a la lista</a>
+        </form>
+    </div>
+</div>
+

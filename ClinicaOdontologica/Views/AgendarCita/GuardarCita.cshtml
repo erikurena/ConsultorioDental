@@ -1,0 +1,191 @@
+﻿@model ClinicaOdontologica.Models.AgendarCitaModel
+
+@{
+    ViewData["Title"] = "GuardarCita";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="d-flex justify-content-center">Agenda</h1>
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <form  id="agendarForm">
+                <div class="card">
+                    <div class="card-header">
+                        Escojer Consultorio:
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class=" col-8 ">
+                                @Html.DropDownListFor(model => model.IdConsultorioMostrar, (IEnumerable<SelectListItem>)ViewBag.ConsultorioMostrar, new { @class = "form-control form-select mb-3 shadow-sm " })
+                                <span asp-validation-for="IdConsultorioMostrar" class="text-danger"></span>
+                            </div>
+                            <div class="col-4 ">
+                                <button type="button" class="btn btn-success col-12" id="BuscarConsultorio">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <br />
+            <form asp-action="GuardarCita" class="flex-column d-flex">
+                <div class="card ">
+                    <div class="card-header">
+                        Agendar Cita:
+                    </div>
+                    <div class="card-body row ">
+                        <div class="form-group col-12">
+                            <label class="control-label">Nombre Paciente:</label>
+                            <input asp-for="NombrePaciente" id="nombrePaciente" class="form-control" />
+                            <span asp-validation-for="NombrePaciente" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="control-label">Tipo de Consulta:</label>
+                            <input asp-for="TipoConsulta" id="tipoConsulta" class="form-control" />
+                            <span asp-validation-for="TipoConsulta" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="control-label">Horario:</label>
+                            <input asp-for="Horario" id="horario" class="form-control" />
+                            <span asp-validation-for="Horario" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="control-label">Fecha:</label>
+                            <input asp-for="Fecha" id="fecha" class="form-control" />
+                            <span asp-validation-for="Fecha" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="control-label">Doctor:</label>
+                            @Html.DropDownListFor(model => model.IdUsuario, (IEnumerable<SelectListItem>)ViewBag.MostrarDoctor, new { @class = "form-control form-select ", @id = "doctor" })
+                            <span asp-validation-for="IdUsuario" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-12 ">
+                            <label class="control-label">Consultorio:</label>
+                            @Html.DropDownListFor(model => model.IdConsultorioGuardar, (IEnumerable<SelectListItem>)ViewBag.ConsultorioGuardar, new { @class = "form-control form-select" })
+                            <span asp-validation-for="IdConsultorioGuardar" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <br />
+                            <input type="submit" value="Guardar" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-7 ">
+            <div class="card p-2" >
+                <div id="calendario"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="eventoModal" tabindex="-1" aria-labelledby="eventoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventoModalLabel">Detalles del Evento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre del Paciente:</strong> <span id="modalNombrePaciente"></span></p>
+                <p><strong>Tipo de Consulta:</strong> <span id="modalTipoConsulta"></span></p>
+                <p><strong>Horario:</strong> <span id="modalHorario"></span></p>
+                <p><strong>Fecha:</strong> <span id="modalFecha"></span></p>
+                <p><strong>Doctor:</strong> <span id="modalDoctor"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <form asp-action="Delete" asp-controller="AgendarCita" method="post">
+                    <input type="hidden" asp-for="IdAgendarCita" id="eventoId" name="id" />
+                    <button type="submit" class="btn btn-danger" id="eliminarEvento" name="Eliminar">Eliminar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendario');
+        var events = @Html.Raw(ViewBag.events ?? "[]");
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            headerToolbar: {
+                left: 'prev',
+                center: 'title',
+                right: 'next'
+            },
+            locale: 'es',
+            slotMinTime: '07:00:00',
+            slotMaxTime: '23:00:00',
+            selectable: true,
+            allDaySlot: false,
+            events: events,
+            eventClick: function (info) {
+                // Abre el modal y muestra los detalles del evento
+                document.getElementById('modalNombrePaciente').innerText = info.event.extendedProps.nombrePaciente;
+                document.getElementById('modalTipoConsulta').innerText = info.event.extendedProps.tipoConsulta;
+                document.getElementById('modalHorario').innerText = info.event.extendedProps.horario;
+                document.getElementById('modalFecha').innerText = info.event.extendedProps.fecha;
+                // Set the event ID in the hidden input
+                document.getElementById('eventoId').value = info.event.id;
+
+                var eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
+                eventoModal.show();
+            }
+        });
+        calendar.render();
+    });
+   
+    $(document).ready(function () {
+        $('#BuscarConsultorio').click(function () {
+            var formData = $('#agendarForm').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AgendaPorConsultorio", "AgendarCita")',
+                data: formData,
+                success: function (response) {
+                    // Actualizar los eventos en el calendario
+                    var calendarEl = document.getElementById('calendario');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'timeGridWeek',
+                        headerToolbar: {
+                            left: 'prev',
+                            center: 'title',
+                            right: 'next'
+                        },
+                        locale: 'es',
+                        slotMinTime: '07:00:00',
+                        slotMaxTime: '23:00:00',
+                        selectable: true,
+                        allDaySlot: false,
+                        events: response,
+                        eventClick: function (info) {
+                            document.getElementById('modalNombrePaciente').innerText = info.event.extendedProps.nombrePaciente;
+                            document.getElementById('modalTipoConsulta').innerText = info.event.extendedProps.tipoConsulta;
+                            document.getElementById('modalHorario').innerText = info.event.extendedProps.horario;
+                            document.getElementById('modalFecha').innerText = info.event.extendedProps.fecha;
+                            document.getElementById('eventoId').value = info.event.id;
+
+                            var eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
+                            eventoModal.show();
+                        }
+                    });
+                    calendar.render();
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+    </script>

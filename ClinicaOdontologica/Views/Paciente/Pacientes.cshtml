@@ -1,0 +1,102 @@
+﻿@model List<PacienteViewModel>
+@{
+    ViewData["Title"] = "Pacientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="d-flex justify-content-center">PACIENTES </h1>
+<hr />
+
+<div class="card ">
+    <div class="card-header">
+        Lista de Pacientes
+    </div>
+    <div class="card-body ">
+        <div class="row">
+            <div class="col">
+                <a asp-controller="Paciente" asp-action="GuardarPaciente" class="btn btn-success">Nuevo Paciente</a>
+            </div>
+            <div class="col">
+                <input class="form-control me-2" type="search" placeholder="Buscar Paciente:" aria-label="Search" id="BPaciente" onkeyup="filtrarPacientes()">
+            </div>
+        </div>      
+       
+        <hr />
+        <table class="table " id="tablaPacientes">
+            <thead>
+                <tr>                 
+                    <th>Nombre:</th>
+                    <th>Apellido Paterno:</th>
+                    <th>Apellido Materno:</th>
+                    <th>Telefono:</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var objPaciente in Model)
+                {
+                    <tr>                     
+                        <td>@objPaciente.NombrePaciente</td>
+                        <td>@objPaciente.ApellidoPaterno</td>
+                        <td>@objPaciente.ApellidoMaterno</td>
+                        <td>@objPaciente.Telefono</td>
+                        <td><a asp-controller="Paciente" asp-action="ModificarPaciente" asp-route-IdPaciente="@objPaciente.IdPaciente"><i class="fa-solid fa-user-pen"></i> </a>   </td>
+                       
+                        <td>
+                            <button class="link-danger" data-bs-toggle="modal" data-bs-target="#EliminarModal-@objPaciente.IdPaciente">
+                                <i class="fa-solid fa-trash-can "></i>
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="EliminarModal-@objPaciente.IdPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Eliminar Paciente</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Estas seguro de Eliminar al Paciente?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <form asp-controller="Paciente" asp-action="EliminarPaciente" method="post">
+                                                <input type="hidden" name="IdPaciente" value="@objPaciente.IdPaciente" />
+                                                <button type="submit" class="btn btn-primary">Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function filtrarPacientes() {
+        var entrada, filter, FilaTabla, tr, td, i, infoPaciente;
+        entrada = document.getElementById("BPaciente");
+        filter = entrada.value.toUpperCase();
+        FilaTabla = document.getElementById("tablaPacientes");
+        tr = FilaTabla.getElementsByTagName("tr");
+
+        for (i = 1; i < tr.length; i++) {
+            tr[i].style.display = "none"; // Oculta todas las filas por defecto
+            td = tr[i].getElementsByTagName("td");
+
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    infoPaciente = td[j].textContent || td[j].innerText;
+                    if (infoPaciente.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = ""; // Muestra la fila si coincide con el filtro
+                        break; // Deja de buscar en las celdas de esta fila
+                    }
+                }
+            }
+        }
+    }
+</script>

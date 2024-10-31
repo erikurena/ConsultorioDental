@@ -1,0 +1,93 @@
+﻿@model UsuarioModel;
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <title>Iniciar Sesión</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            margin: 0;
+            padding: 0;           
+            background: rgb(2,0,36);
+            background: linear-gradient(31deg, rgba(2,0,36,0.5662640056022409) 0%, rgba(137,196,193,1) 54%, rgba(105,165,221,1) 100%);
+        }
+        .fondoLogin {
+            background-image: url("/img/logins.jpg");
+            background-color: rgba(0, 0, 0, 0.1);
+            background-size: cover;
+            background-position: center;
+            border-radius: 42px 0px 0px 42px;            
+        }        
+        .letraCurva {
+            font-family: "Dancing Script", cursive;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+            color: ghostwhite;
+        }
+    </style>
+</head>
+
+<body class="container-fluid">
+    <section class="d-flex align-items-center justify-content-center min-vh-100 ">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 ">
+            <div class="row   ">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6  fondoLogin" >    
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6  shadow-lg" >
+                        <h2 class=" text-center  display-2 fw-bold">CLINICA TITANIUM   </h2>
+                        <h3 class="d-flex  justify-content-center  display-5  ls-ti  ">INICIAR SESIÓN</h3>        
+                            
+                        <form asp-controller="Login" asp-action="Index" method="post" class="card-body py-5 px-md-5">                            
+                            <div class="form-floating mb-4 ">
+                                <input type="text" class="form-control" placeholder="Usuario:" asp-for="ApellidoPaterno" style=" border:0px;   background-color: rgba(255, 255, 255, 0.1);" />
+                                <label class="form-label  " for="floatingTextarea"> <i class="fa-solid fa-user me-1"></i> Usuario:</label>
+                            @Html.ValidationMessageFor(model => model.ApellidoPaterno, "", new { @class = "text-danger" })
+                            </div>                               
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" placeholder="Contraseña" asp-for="Password" style="border:0px;   background-color: rgba(255, 255, 255, 0.1);" />
+                                <label class="form-label" for="floatingTextarea"><i class="fa-solid fa-lock me-1"></i> Contraseña:</label>
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>                              
+                            <button type="submit" class="btn btn-primary btn-block mb-4 float-end"> INGRESAR </button>            
+                        </form>
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert text-center " role="alert">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <p>@error.ErrorMessage</p>
+                            }
+                        </div>
+                    }
+                    </div>
+                </div>            
+        </div>       
+    </section>
+   
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+
+</html>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

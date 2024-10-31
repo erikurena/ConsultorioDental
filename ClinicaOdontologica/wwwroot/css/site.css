@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+   border: 0px;
+   padding: 0px;
+}
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+.circle {
+    background-color: #aaa;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .circle img {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+@media (min-width: 768px) {
+    .ocultarElementoOpcional {
+        display: none;
+    }
+    .navbarExpandido{
+        min-height: 100vh;
+    }
+}
+@media (max-width: 768px) {
+    /* Estilos que se aplicarán cuando el ancho de la pantalla sea menor a 768px */
+    .ocultarElemento {
+        display: none;
+    }
+    .flex-column {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .navbar-nav {
+        text-align: center; /* Centra los elementos de la lista horizontalmente */
+    }
+    .nav-item {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        margin-bottom: 10px; /* Espaciado entre elementos */
+    }
+    .nav-link {
+        display: block; /* Asegura que los enlaces ocupen todo el ancho disponible */
+        text-align: center; /* Centra el texto dentro de los enlaces */
+    }   
+}
+
+body {
+    margin-bottom: 60px;
+}
+.letraNav {
+    import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+@media (min-width: 768px) {
+    .columnaNav {
+        width: 250px; 
+        font-size: 18px;
+        margin: 0px;
+    }
+}
+.card {
+    border: 1px;
+    box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.25);
+    -moz-box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.25);
+}
+
+.card-header {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: white;
+}

@@ -1,0 +1,54 @@
+﻿@model InfoPersonalPacienteModel
+
+@{
+    ViewData["Title"] = "Guardar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Informacion Personal
+    </div>
+    <div class="card-body">
+        <form asp-action="Guardar GradoInstruccion" asp-controller="InformacionPersonal Instruccion" method="post">
+            <div class="mb-3">
+                <label  class="form-label">Nombre</label>
+                <input asp-for="Nombre" type="text" class="form-control" >               
+            </div>
+            <div class="mb-3">
+                <label  class="form-label">Apellido Paterno</label>
+                <input asp-for="ApellidoPaterno" type="text" class="form-control" >
+            </div>            
+            <div class="mb-3">
+                <label class="form-label">Apellido Materno</label>
+                <input asp-for="ApellidoMaterno" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ocupacion</label>
+                <input asp-for="Ocupacion" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Direccion</label>
+                <input asp-for="Direccion" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Telefono</label>
+                <input asp-for="Telefono" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Edad</label>
+                <input asp-for="Edad" type="text" class="form-control">
+            </div>
+            <div class="mb-3"  >
+                <label for="IdGradoInstruccion">Grado de Instruccion:</label>
+                @Html.DropDownListFor(GradoInstruccionModel  => new GradoInstruccionModel().IdGradoInstruccion, (IEnumerable<SelectListItem>)ViewBag.Instruccion, "Selecciona una categoría", new { @class = "form-control" })
+                
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a asp-action="ListaInformacion" asp-controller="InformacionPersonal" class="btn btn-warning">Volver a la lista</a>
+        </form>
+        
+    </div>
+</div>
+
+          

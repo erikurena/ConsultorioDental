@@ -1,0 +1,71 @@
+﻿@model ClinicaOdontologica.Models.UsuarioModel
+
+@{
+    ViewData["Title"] = "Modificar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="text-center">Modificar Usuario</h1>
+<hr />
+
+<div class="container p-0">
+    <form asp-action="ModificarUsuario" asp-controller="Usuario" method="post" class="d-flex flex-column" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="card">
+            <div class="card-header">
+                Informacion del Usuario
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <input type="hidden" asp-for="IdUsuario" />
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="IdRol" class="control-label">Rol:</label>
+                        @Html.DropDownListFor(model => model.IdRol, (IEnumerable<SelectListItem>)ViewBag.MostrarRol, new { @class = "form-control form-select" })
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label class="control-label">Nombre:</label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label class="control-label">Apellido Paterno:</label>
+                        <input asp-for="ApellidoPaterno" class="form-control" />
+                        <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label class="control-label">Apellido Materno</label>
+                        <input asp-for="ApellidoMaterno" class="form-control" />
+                        <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label class="control-label">Dirección:</label>
+                        <input asp-for="Direccion" class="form-control" />
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label class="control-label">Telefono:</label>
+                        <input asp-for="Telefono" class="form-control" />
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label class="control-label">Contraseña:</label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 py-4">
+                        <input asp-for="ImgUsuario" type="file" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a asp-action="Index" class="btn btn-secondary">Volver a la Lista de Usuarios</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </form>
+</div>
+
+<div>
+ 
+</div>
+
